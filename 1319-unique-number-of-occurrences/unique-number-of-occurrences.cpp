@@ -7,10 +7,16 @@ public:
             hash[arr[i]+1000]++;
        } 
 
+       unordered_set<int> s;
+
        for(int i=0; i<2001; i++){
-         for(int j=i+1; j<2001; j++){
-            if(hash[i]==hash[j] && hash[i]!=0 && hash[j] != 0) return false;
-         }
+            if(hash[i]==0) continue;
+
+            if(s.find(hash[i]) != s.end()){
+                return false;
+            }
+            
+            s.insert(hash[i]);
        }
 
        return true;
