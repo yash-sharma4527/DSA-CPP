@@ -17,18 +17,6 @@ public:
             }
         }
 
-        int a = 0;
-        int b = 0;
-
-        while(!st.empty()){
-
-            if(st.top() == '(') a++;
-
-            else b++;
-
-            st.pop();
-        }
-
-        return a+b;
+        return st.size();
     }
 };
