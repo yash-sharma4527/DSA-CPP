@@ -1,24 +1,27 @@
 class Solution {
-public:
-    bool isHappy(int n) {
-        unordered_set<int> s;
+    int digitSquare(int n){
+        int sum = 0;
 
-        while(!s.count(n)){
-            s.insert(n);
-
-            int sum = 0;
-
-            while( n != 0){
-                int digit = n%10;
-                sum += digit*digit;
-                n = n/10;
-            }
-
-            if(sum == 1) return true;
-
-            else n = sum;
+        while( n != 0){
+            int digit = n%10;
+            sum += digit*digit;
+            n = n/10;
         }
 
-        return false;
+        return sum;
+    }
+
+public:
+    bool isHappy(int n) {
+        
+        int slow = n;
+        int fast = n;
+
+        do{
+            slow = digitSquare(slow);
+            fast = digitSquare(digitSquare(fast));
+        }while(slow != fast);
+
+        return slow == 1;
     }
 };
