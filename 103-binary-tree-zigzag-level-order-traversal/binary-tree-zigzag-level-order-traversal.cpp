@@ -19,37 +19,42 @@ public:
         }
 
         queue<TreeNode*> q;
+
+        bool flag = 0;
+
         q.push(root);
-        q.push(NULL);
-
-        int count = 1;
-
-        vector<int> level;
 
         while(!q.empty()){
-            TreeNode* temp = q.front();
-            q.pop();
+            int n = q.size();
+            vector<int> level(n);
 
-            if(temp == NULL){
-                if(count%2 == 0){
-                    reverse(level.begin(),level.end());
-                }
-                ans.push_back(level);
-                level.clear();
-                count++;
+            if(flag){
+                for(int i=n-1; i>=0; i--){
+                   TreeNode* temp = q.front();
+                   q.pop();
 
-                if(!q.empty()){
-                    q.push(NULL);
+                   level[i] = temp->val;
+
+                   if(temp->left) q.push(temp->left);
+                   if(temp->right) q.push(temp->right);
                 }
             }
 
             else{
-                level.push_back(temp->val);
+                for(int i=0; i<n; i++){
+                    TreeNode* temp = q.front();
+                    q.pop();
 
-                if(temp->left) q.push(temp->left);
+                    level[i] = temp->val;
 
-                if(temp->right) q.push(temp->right);
+                    if(temp->left) q.push(temp->left);
+                    if(temp->right) q.push(temp->right);
+                }
             }
+
+            flag = !flag;
+
+            ans.push_back(level);
         }
 
         return ans;
