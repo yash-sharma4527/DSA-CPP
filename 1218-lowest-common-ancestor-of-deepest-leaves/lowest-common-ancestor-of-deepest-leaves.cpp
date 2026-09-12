@@ -10,43 +10,30 @@
  * };
  */
 class Solution {
-    int maxD = 0;
-
-    void depth(TreeNode* root,auto &mp,int h){
+    pair<int,TreeNode*> lca(TreeNode* root){
         if(root == NULL){
-            return;
+            return {0,NULL};
         }
 
-        maxD = max(maxD,h);
-        mp[root->val] = h;
+        auto left = lca(root->left);
+        auto right = lca(root->right);
 
-        depth(root->left,mp,h+1);
-        depth(root->right,mp,h+1);
-    }
-
-    TreeNode* lca(TreeNode* root,auto &mp){
-        if(root == NULL || mp[root->val] == maxD){
-            return root;
+        if(left.first == right.first){
+            return {left.first+1,root};
         }
 
-        TreeNode* left = lca(root->left,mp);
-        TreeNode* right = lca(root->right,mp);
-
-        if(left && right){
-            return root;
+        if(left.first > right.first){
+            return {left.first+1,left.second};
         }
 
-        if(left) return left;
-
-        return right;
+        else{
+            return {right.first + 1 , right.second};
+        }
     }
 public:
     TreeNode* lcaDeepestLeaves(TreeNode* root) {
         
-        unordered_map<int,int> mp;
-
-        depth(root,mp,0);
-
-        return lca(root,mp);
+        return lca(root).second;
+        
     }
 };
