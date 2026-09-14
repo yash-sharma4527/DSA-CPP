@@ -3,7 +3,7 @@ public:
     int calPoints(vector<string>& operations) {
         stack<int> st;
 
-        for(string s : operations){
+        for(string &s : operations){
             if( s == "+"){
                 int a = st.top();
                 st.pop();
@@ -14,8 +14,7 @@ public:
 
             else if(s == "D"){
                int x = st.top();
-               x = x*2;
-               st.push(x);
+               st.push(x*2);
             }
 
             else if(s == "C"){
@@ -23,8 +22,7 @@ public:
             }
 
             else{
-                int x = stoi(s);
-                st.push(x);
+                st.push(stoi(s));
             }
         }
 
