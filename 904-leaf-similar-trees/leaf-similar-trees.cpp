@@ -30,14 +30,6 @@ public:
         solve(root1,tree1);
         solve(root2,tree2);
 
-        if(tree1.size() != tree2.size()) return false;
-
-        for(int i=0; i<tree1.size(); i++){
-            if(tree1[i] != tree2[i]){
-                return false;
-            }
-        } 
-
-        return true;
+        return tree1 == tree2;
     }
 };
