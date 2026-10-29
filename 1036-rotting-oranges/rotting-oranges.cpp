@@ -1,5 +1,5 @@
 class Solution {
-    void bfs(vector<vector<int>> &grid,queue<pair<int,int>> &q,int &time){
+    void bfs(vector<vector<int>> &grid,queue<pair<int,int>> &q,int &time,int &fresh){
 
         int dr[4] = {-1,1,0,0};
         int dc[4] = {0,0,-1,1};
@@ -19,6 +19,7 @@ class Solution {
                     nc >= 0 && grid[nr][nc] == 1){
                         grid[nr][nc] = 2;
                         q.push({nr,nc});
+                        fresh--;
                     }
                 }
 
@@ -36,24 +37,23 @@ public:
 
         queue<pair<int,int>> q;
 
+        int fresh = 0;
+        int time = 0;
+
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
                 if(grid[i][j] == 2){
                     q.push({i,j});
                 }
-            }
-        }
-
-        int time = 0;
-        bfs(grid,q,time);
-
-        for(int i=0; i<n; i++){
-            for(int j=0; j<m; j++){
-                if(grid[i][j] == 1){
-                    return -1;
+                else if(grid[i][j] == 1){
+                    fresh++;
                 }
             }
         }
+
+        bfs(grid,q,time,fresh);
+
+        if(fresh) return -1;
 
         return time;
     }
